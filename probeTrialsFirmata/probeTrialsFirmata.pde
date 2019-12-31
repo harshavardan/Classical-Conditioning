@@ -1,3 +1,10 @@
+/* Classical conditioning with light as CS and shock as US. 
+A number of CS and US can be given to establish baseline 
+responses before training begins. During training, the CS 
+goes on and the US can be delivered anywhere within the CS.
+Probe trials can be randomly delivered during training. 
+Finally, CS-only test trials are given to extinguish learning.*/ 
+
 import processing.serial.*;
 import cc.arduino.*;
 Arduino arduino;
