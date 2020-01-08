@@ -27,10 +27,11 @@ float arrayAvg(float[] arrayToAvg)
 {
   int len = arrayToAvg.length;
   float sum = 0;
-  for (int i = 0; i<arrayToAvg.length; i++) {
+  for (int i = 0; i<arrayToAvg.length; i++) 
+  {
     sum += arrayToAvg[i]; 
   }
-  float avg = sum/len;
+  float avg = sum / len;
   return avg;
 }
 
