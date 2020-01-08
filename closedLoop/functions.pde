@@ -21,22 +21,6 @@ float[] updateFifoBuffer(float[] buffer, float value)
   return updatedBuffer; 
 }
 
-// Find if element is in an array and return true or false
-
-boolean ifisin(int element, int[] array) 
-{
-  boolean found = false;
-  for (int i=0; i<array.length; i++) 
-  {
-    if (element == array[i]) 
-    {
-      found = true;
-      break;
-    }  
-  }
-  return found;
-}
-
 // Average an array
 
 float arrayAvg(float[] arrayToAvg) 
@@ -51,16 +35,7 @@ float arrayAvg(float[] arrayToAvg)
 }
 
 
-int arraySum(int[] array) {
-  int sum = 0;
-  for (int i=0; i<array.length; i++) {
-    sum += array[i];
-  }
-  return sum;
-}
-
-
-//quit
+//quit using keyboard
 
 void keyPressed() 
 {
