@@ -6,7 +6,7 @@ void draw()
   
   surface.setTitle("fps: " + round(frameRate));     
   //frame.setLocation(1750, 0); 
-  scal = 1 / (frameRate * per);
+  scal = 1 / (frameRate * period);
 
   arrayCopy(updateFifoBuffer(fifoBuffer, k), fifoBuffer);
   

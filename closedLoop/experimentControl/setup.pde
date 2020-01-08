@@ -9,7 +9,7 @@ void setup()
   myshader = loadShader("sine.frag");
   if (square==true){c=10;}  
   myshader.set("th", th);
-  myshader.set("sper", per);
+  myshader.set("sper", period);
   myshader.set("contrast", c);
 
   delay(100);
