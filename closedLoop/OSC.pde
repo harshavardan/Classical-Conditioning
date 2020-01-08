@@ -38,7 +38,7 @@ void oscEvent(OscMessage theOscMessage) {
   arrayCopy(updateFifoBuffer(slidingWindow,k),slidingWindow);
   k = arrayAvg(slidingWindow);
  
-  k = LowpassFilter(k*movement_scaling,prev_k,tau);
+  k = LowpassFilter(k,prev_k,tau);
   prev_k = k;
   k = k*gain/pixelwidth;
 }

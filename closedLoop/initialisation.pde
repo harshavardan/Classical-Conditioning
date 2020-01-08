@@ -66,7 +66,7 @@ void keyPressed()
 {
     if (key == ESC)
   {
-    print("Forced to quit with keyboard!");
+    print("Forced to quit with keyboard!\n");
     exit();
   } 
 }
