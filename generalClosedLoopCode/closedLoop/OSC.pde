@@ -25,9 +25,7 @@ void oscEvent(OscMessage theOscMessage)
   tau = timecourse / tailsamplinginterval;
   raw_k = theOscMessage.get(0).doubleValue();
   k = (float) raw_k;
-  arrayCopy(updateFifoBuffer(slidingWindow, k), slidingWindow);
-  k = arrayAvg(slidingWindow);
   k = LowpassFilter(k, prev_k, tau);
   prev_k = k;
-  k = k * gain / pixelwidth;
+  k = k * gain / pixelWidth;
 }

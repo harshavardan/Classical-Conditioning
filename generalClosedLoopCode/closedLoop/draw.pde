@@ -2,13 +2,10 @@ void draw()
 {
   
   // Trying to change k without the need for any osc messages
-  k++;
+  k = 500;
   
-  surface.setTitle("fps: " + round(frameRate));     
-  //frame.setLocation(1750, 0); 
+  surface.setTitle("fps: " + round(frameRate));
   scal = 1 / (frameRate * period);
-
-  arrayCopy(updateFifoBuffer(fifoBuffer, k), fifoBuffer);
   
   // Updating the shader
   
