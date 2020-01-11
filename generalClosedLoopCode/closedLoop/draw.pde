@@ -2,7 +2,8 @@ void draw()
 {
   
   // Trying to change k without the need for any osc messages
-  k = 500;
+  
+  k = 100;
   
   surface.setTitle("fps: " + round(frameRate));
   scal = 1 / (frameRate * period);

@@ -1,13 +1,19 @@
 /* Basic closed loop code, contains no experiment structure.  
 The grating only responds to tail motion whenever it is detected.
 It is meant to be forked and modified if closed loop is needed in 
-the background of another experiment.*/
+the background of another experiment.
+
+Bonsai is used to capture, process and save the video. Difference
+between consecutive frames is averaged and this is sent to 
+Processing via the OSC protocol. Processing uses this with gain 
+and pixel size to update the shader.*/
 
 
 // Fish information
 
 String genotype = "Indian Wild Type";
 String dpf = "7";
+String path = "../data/";
 
 // parameters
 

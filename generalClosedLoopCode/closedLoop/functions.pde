@@ -1,3 +1,5 @@
+// lowpass filter
+
 float LowpassFilter(float current_value, float previous_value, float tau)  
 {
   float alpha = 1.0 / (tau + 1);
@@ -6,7 +8,7 @@ float LowpassFilter(float current_value, float previous_value, float tau)
   return swim;
 }
 
-// Average an array
+// average an array
 
 float arrayAvg(float[] arrayToAvg) 
 {
@@ -19,7 +21,6 @@ float arrayAvg(float[] arrayToAvg)
   float avg = sum / len;
   return avg;
 }
-
 
 //quit using keyboard
 
