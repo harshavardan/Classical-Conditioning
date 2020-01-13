@@ -8,20 +8,6 @@ float LowpassFilter(float current_value, float previous_value, float tau)
   return swim;
 }
 
-// average an array
-
-float arrayAvg(float[] arrayToAvg) 
-{
-  int len = arrayToAvg.length;
-  float sum = 0;
-  for (int i = 0; i<arrayToAvg.length; i++) 
-  {
-    sum += arrayToAvg[i]; 
-  }
-  float avg = sum / len;
-  return avg;
-}
-
 //quit using keyboard
 
 void keyPressed() 

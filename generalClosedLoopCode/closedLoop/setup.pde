@@ -6,6 +6,8 @@ void setup()
   fill(0, 0, 0);
   noCursor();
   
+  // loading shader and setting parameters
+  
   myshader = loadShader("sine.frag");
   if (square==true){c=10;}  
   myshader.set("th", th);
