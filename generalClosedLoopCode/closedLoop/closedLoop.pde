@@ -9,7 +9,7 @@ the OSC protocol. Processing uses this with gain and pixel size
 to update the shader.*/
 
 
-// Fish information
+// fish information
 
 String genotype = "Indian Wild Type";
 String dpf = "7";
