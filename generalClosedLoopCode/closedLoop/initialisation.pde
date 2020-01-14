@@ -1,5 +1,5 @@
-String[] data = new String[6];
-PrintWriter[] DataWriter = new PrintWriter[6];
+String[] data = new String[2];
+PrintWriter[] dataWriter = new PrintWriter[2];
 PrintWriter notes;
 String time=(str(hour())+":"+str(minute())+":"+str(second()));
 String[] Filenames = {"grating","time"};
@@ -40,10 +40,10 @@ void keyPressed()
 {
     if (key == ESC)
   {
-    for (int i = 0; i < DataWriter.length; i++) 
+    for (int i = 0; i < dataWriter.length; i++) 
     {
-      DataWriter[i].flush();
-      DataWriter[i].close();
+      dataWriter[i].flush();
+      dataWriter[i].close();
     }
     
     notes.println();

@@ -1,6 +1,6 @@
 void draw() 
 {
-  currentTime = millis();
+  int currentTime = millis();
   
   // changing k without the need for any osc messages
   
@@ -18,16 +18,20 @@ void draw()
   
   // writing data
   
-  Data[0] = str(xPos); // position of shader
-  Data[1] = str(currentTime);  // time at which that position was updated
+  data[0] = str(xPos); // position of shader
+  data[1] = str(currentTime);  // time at which that position was updated
   
-  for (int i = 0; i < DataWriter.length; i++) 
+  if(!init)
   {
-    DataWriter[i] = createWriter(filepath + Filenames[i] + ".txt");
+    for (int i = 0; i < dataWriter.length; i++)
+    {
+      dataWriter[i] = createWriter(filePath + "/" + generateDate() + "/" + fish + "/" +  Filenames[i] + ".txt");
+    }
+    init = true;
   }
   
-  for (int i = 0; i < DataWriter.length; i++) 
+  for (int i = 0; i < dataWriter.length; i++)
   {
-    DataWriter[i] = createWriter(filepath + Filenames[i] + ".txt");
+    dataWriter[i].println(data[i]+','); //The comma separation is for legacy reasons
   }
 }

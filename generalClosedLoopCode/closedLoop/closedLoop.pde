@@ -13,7 +13,8 @@ to update the shader.*/
 
 String genotype = "Indian Wild Type";
 String dpf = "7";
-String path = "../data/";
+String filePath = "../data";
+String fish = "F1";
 
 // parameters
 
@@ -30,3 +31,4 @@ Boolean square = true;
 float framerate = 120.0; //Refresh rate in Hz
 float frameinterval = 1000.0 / framerate;
 float scal = 1 / (framerate * period);
+boolean init = false; // have the files to be written been created?

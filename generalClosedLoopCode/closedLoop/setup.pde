@@ -6,13 +6,12 @@ void setup()
   fill(0, 0, 0);
   noCursor();
   
-   notes = createWriter(path + "/" + generateDate() + "/" + basename + "/" + "parameters.txt");
+   notes = createWriter(filePath + "/" + generateDate() + "/" + fish + "/" + "parameters.txt");
    notes.println("Date\t\t\t:\t" + generateDate());
    notes.println("Time\t\t\t:\t" + time);
-   notes.println("Genotype\t\t:\t" + Genotype);
+   notes.println("Genotype\t\t:\t" + genotype);
    notes.println("Days Post Fertilization\t:\t" + dpf);
-   notes.println("CL Scaling Factor \t:\t" + str(movement_scaling));
-  
+     
   // loading shader and setting parameters
   
   myshader = loadShader("sine.frag");
