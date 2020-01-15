@@ -1,0 +1,3 @@
+To do:
+
+- save experiment structure and parameters
