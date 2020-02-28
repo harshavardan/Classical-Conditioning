@@ -1,5 +1,7 @@
 void draw() 
 {
+  
+  ////////////////////Closed Loop Stuff//////////////////////////////
   int currentTime = millis();
   
   // changing k without the need for any osc messages
@@ -34,4 +36,6 @@ void draw()
   {
     dataWriter[i].println(data[i]+','); //The comma separation is for legacy reasons
   }
+  
+  //////////////////////////////////////////////////////////////////////
 }

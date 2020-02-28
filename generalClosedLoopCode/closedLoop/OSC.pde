@@ -1,3 +1,5 @@
+////////////////////Closed Loop Stuff//////////////////////////////
+
 import oscP5.*;
 import netP5.*;
 
@@ -27,3 +29,5 @@ void oscEvent(OscMessage theOscMessage)
   prev_k = k;
   k = k * gain / pixelWidth;
 }
+
+//////////////////////////////////////////////////////////////////////

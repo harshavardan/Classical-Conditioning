@@ -1,5 +1,7 @@
 void setup() 
 {
+  ////////////////////Closed Loop Stuff//////////////////////////////
+  
   frameRate(framerate);
   background(255, 255, 255);       
   noStroke();                
@@ -22,4 +24,6 @@ void setup()
 
   delay(100);
   oscP5 = new OscP5(this,2323);
+  
+  //////////////////////////////////////////////////////////////////////
 }

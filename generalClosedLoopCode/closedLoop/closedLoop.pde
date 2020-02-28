@@ -8,6 +8,7 @@ between consecutive frames is averaged and sent to Processing via
 the OSC protocol. Processing uses this with gain and pixel size 
 to update the shader.*/
 
+////////////////////Closed Loop Stuff//////////////////////////////
 
 // fish information
 
@@ -32,3 +33,5 @@ float framerate = 120.0; //Refresh rate in Hz
 float frameinterval = 1000.0 / framerate;
 float scal = 1 / (framerate * period);
 boolean init = false; // have the files to be written been created?
+
+//////////////////////////////////////////////////////////////////////

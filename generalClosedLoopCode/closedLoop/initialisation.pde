@@ -1,3 +1,5 @@
+////////////////////Closed Loop Stuff//////////////////////////////
+
 String[] data = new String[2];
 PrintWriter[] dataWriter = new PrintWriter[2];
 PrintWriter notes;
@@ -55,3 +57,5 @@ void keyPressed()
     exit();
   } 
 }
+
+//////////////////////////////////////////////////////////////////////
