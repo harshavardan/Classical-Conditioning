@@ -9,9 +9,9 @@ float gain = 1.0;
 double raw_k = 0.0; 
 float k = 0.0; 
 float prev_k = 0.0; 
-float tailsamplinginterval = 20; //milliseconds (after accounting for sliding window averaging) 
+float tail_sampling_interval = 20; //milliseconds (after accounting for sliding window averaging) 
 float timecourse = 10; 
-float tau = timecourse / tailsamplinginterval;   
+float tau = timecourse / tail_sampling_interval;   
 int current_event_time = 0;
 int prev_event_time = 0;
 
@@ -20,14 +20,14 @@ int prev_event_time = 0;
 void oscEvent(OscMessage theOscMessage) 
 {
   current_event_time = millis();
-  tailsamplinginterval = current_event_time - prev_event_time;
+  tail_sampling_interval = current_event_time - prev_event_time;
   prev_event_time = current_event_time;
-  tau = timecourse / tailsamplinginterval;
+  tau = timecourse / tail_sampling_interval;
   raw_k = theOscMessage.get(0).doubleValue();
   k = (float) raw_k;
-  k = LowpassFilter(k, prev_k, tau);
+  k = Lowpass_filter(k, prev_k, tau);
   prev_k = k;
-  k = k * gain / pixelWidth;
+  k = k * gain / pixel_width;
 }
 
 //////////////////////////////////////////////////////////////////////
