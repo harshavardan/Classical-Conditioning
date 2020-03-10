@@ -2,9 +2,4 @@
 
 PShader myshader;
 
-public void settings() 
-{
-  size(window_width, window_height, "processing.opengl.PGraphics3D");
-}
-
 //////////////////////////////////////////////////////////////////////

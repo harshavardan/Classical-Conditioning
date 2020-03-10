@@ -1,13 +1,19 @@
 void draw() 
 {
   
+  myshader = loadShader("sine.frag");
+  if (square==true){c=10;}  
+  myshader.set("th", th);
+  myshader.set("sper", period);
+  myshader.set("contrast", c);
+  
   ////////////////////Closed Loop Stuff//////////////////////////////
   int current_time = millis();
   
   // changing k without the need for any osc messages  
   k = 100;
   
-  surface.setTitle("fps: " + round(frame_rate));
+  //surface.setTitle("fps: " + round(frame_rate));
   scal = 1 / (frame_rate * period);
   
   // updating the shader

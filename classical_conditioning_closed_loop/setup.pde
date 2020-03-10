@@ -2,6 +2,7 @@ void setup()
 {
   ////////////////////Closed Loop Stuff//////////////////////////////
   
+  size(window_width, window_height, P2D);
   frameRate(frame_rate);
   background(255, 255, 255);       
   noStroke();                
@@ -16,11 +17,7 @@ void setup()
      
   // loading shader and setting parameters
   
-  myshader = loadShader("sine.frag");
-  if (square==true){c=10;}  
-  myshader.set("th", th);
-  myshader.set("sper", period);
-  myshader.set("contrast", c);
+
 
   delay(100);
   oscP5 = new OscP5(this,2323);

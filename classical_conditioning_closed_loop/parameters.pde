@@ -1,6 +1,6 @@
 ///////////////////Classical Conditioning/////////////////////////////
   
-int scaling = 1; //factor to scale down times for checking and debugging
+int scaling = 10000; //factor to scale down times for checking and debugging
 int led_on = 2000 / scaling; //time of led on in milli seconds
 int index = 0;
 long previous_time = 0;
@@ -14,7 +14,7 @@ long isi = 120000 / scaling; //interval between training trials
 long wait = 120000 / scaling; //wait period before test trials
 float[] structure = new float[no_pre_CS + no_pre_US + no_training + no_test]; //stores timing information of the stimuli
 int stimulus_count = 0; //counts the number of stimuli given
-int init_delay = 120000 / scaling; //initial delay
+int init_delay = 100000 / scaling; //initial delay
 int[] probe = new int[no_probe]; //positions of probe trials
 int led = 0; //status of led
 String[] trial = {}; // holds whether a particular trial is preCS or preUS or whatever
