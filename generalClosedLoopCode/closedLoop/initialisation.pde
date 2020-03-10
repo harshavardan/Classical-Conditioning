@@ -4,11 +4,11 @@ String[] data = new String[2];
 PrintWriter[] dataWriter = new PrintWriter[2];
 PrintWriter notes;
 String time=(str(hour())+":"+str(minute())+":"+str(second()));
-String[] Filenames = {"grating","time"};
+String[] file_names = {"grating","time"};
 
 // lowpass filter
 
-float LowpassFilter(float current_value, float previous_value, float tau)  
+float lowpass_filter(float current_value, float previous_value, float tau)  
 {
   float alpha = 1.0 / (tau + 1);
   float swim = 0.0;
@@ -18,7 +18,7 @@ float LowpassFilter(float current_value, float previous_value, float tau)
 
 // returns date
 
-String generateDate()
+String generate_date()
 {  
   String year,month,day,Date;
   

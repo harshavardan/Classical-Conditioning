@@ -21,10 +21,10 @@ String fish = "F1";
 
 int window_width = 1000; // width of the display window
 int window_height = 500; // height of the display window
-float pixelWidth = 0.032; //centimetres
+float pixel_width = 0.032; //centimetres
 float x_pos = 0.0;   
 float Width = 1.0; // period in cm
-float period = Width / pixelWidth; //period in pixels
+float period = Width / pixel_width; //period in pixels
 float offset = 0.0;
 float th = (PI) + offset; //orientation in radians (0, 1.5708, 3.148)
 float c = 0.5; //contrast

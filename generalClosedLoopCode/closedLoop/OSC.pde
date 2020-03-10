@@ -25,7 +25,7 @@ void oscEvent(OscMessage theOscMessage)
   tau = timecourse / tail_sampling_interval;
   raw_k = theOscMessage.get(0).doubleValue();
   k = (float) raw_k;
-  k = Lowpass_filter(k, prev_k, tau);
+  k = lowpass_filter(k, prev_k, tau);
   prev_k = k;
   k = k * gain / pixel_width;
 }

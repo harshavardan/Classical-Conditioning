@@ -8,7 +8,7 @@ void draw()
   
   k = 100;
   
-  surface.setTitle("fps: " + round(frame_rate));
+  //surface.setTitle("fps: " + round(frame_rate));
   scal = 1 / (frame_rate * period);
   
   // updating the shader
