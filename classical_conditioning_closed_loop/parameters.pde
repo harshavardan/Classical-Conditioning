@@ -1,28 +1,43 @@
 ///////////////////Classical Conditioning/////////////////////////////
-  
-int scaling = 1; //factor to scale down times for checking and debugging
-int cs_duration = 2000 / scaling; //time of led on in milli seconds
-int index = 0;
-long previous_time = 0;
-int us_duration = 500/ scaling; //time of bright flash
-int no_pre_CS = 2;
-int no_pre_US = 2;
-int no_training = 10;
-int no_test = 2;
-int no_probe = 2; //number of probe trials interspersed in the training trials
-long isi = 10000 / scaling; //interval between training trials
-long wait = 10000 / scaling; //wait period before test trials
+
+//debugging
+
+int scaling = 1; //factor to scale down times during debugging
+
+//randomization of ITIs
+boolean random = true; //are ITIs randomised?
+float max = 75000; //max ITI allowed
+float min = 45000; //min ITI allowed
+
+//structure of the experiment
+
+int init_delay = 30000 / scaling; //initial delay
+int no_pre_CS = 10;
+int no_pre_US = 10;
+int no_training = 20;
+int no_test = 10;
+int no_probe = 5; //number of probe trials interspersed in the training trials
+long wait = 30000 / scaling; //wait period before test trials
+
+//CS and US parameters
+
+int CS_dur = 2000 / scaling; //time of led on in milli seconds
+int US_dur = 50/ scaling; //time of bright flash
+long iti = 30000 / scaling; //interval between training trials
+float US_pos = 0.5; //position of the US relative to the CS
+
+//others
+
 float[] structure = new float[no_pre_CS + no_pre_US + no_training + no_test]; //stores timing information of the stimuli
 int stimulus_count = 0; //counts the number of stimuli given
-int init_delay = 10000 / scaling; //initial delay
 int[] probe = new int[no_probe]; //positions of probe trials
 int led = 0; //status of led
 String[] trial = {}; // holds whether a particular trial is preCS or preUS or whatever
-float US_pos = 0.5; //position of the US relative to the CS
 int US = 0; // has the US been delivered in a particular trial?
 int triggered = 0; //has Bonsai been triggered yet?
 int entered = 0; //
 String[] probe_str = {};
-int blah = 0; //trying to see how fast draw loops over
+int index = 0;
+long previous_time = 0;
 
 //////////////////////////////////////////////////////////////////////

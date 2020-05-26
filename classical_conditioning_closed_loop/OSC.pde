@@ -27,7 +27,7 @@ void oscEvent(OscMessage theOscMessage)
   k = (float) raw_k;
   k = lowpass_filter(k, prev_k, tau);
   prev_k = k;
-  k = k * gain / pixelWidth;
+  k = k * gain / pixel_width;
 }
 
 //////////////////////////////////////////////////////////////////////
