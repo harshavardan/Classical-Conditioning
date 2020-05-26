@@ -6,8 +6,8 @@ int scaling = 1; //factor to scale down times during debugging
 
 //randomization of ITIs
 boolean random = true; //are ITIs randomised?
-float max = 75000; //max ITI allowed
-float min = 45000; //min ITI allowed
+float max = 70000; //max ITI allowed
+float min = 50000; //min ITI allowed
 
 //structure of the experiment
 
