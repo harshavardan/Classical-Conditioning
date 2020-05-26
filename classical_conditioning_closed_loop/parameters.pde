@@ -12,28 +12,28 @@ float min = 50000; //min ITI allowed
 //structure of the experiment
 
 int init_delay = 30000 / scaling; //initial delay
-int no_pre_CS = 10;
-int no_pre_US = 10;
+int no_pre_cs = 10;
+int no_pre_us = 10;
 int no_training = 20;
 int no_test = 10;
 int no_probe = 5; //number of probe trials interspersed in the training trials
 long wait = 30000 / scaling; //wait period before test trials
 
-//CS and US parameters
+//cs and us parameters
 
-int CS_dur = 2000 / scaling; //time of led on in milli seconds
-int US_dur = 50/ scaling; //time of bright flash
+int cs_dur = 2000 / scaling; //time of led on in milli seconds
+int us_dur = 50/ scaling; //time of bright flash
 long iti = 30000 / scaling; //interval between training trials
-float US_pos = 0.5; //position of the US relative to the CS
+float us_pos = 0.5; //position of the us relative to the cs
 
 //others
 
-float[] structure = new float[no_pre_CS + no_pre_US + no_training + no_test]; //stores timing information of the stimuli
+float[] structure = new float[no_pre_cs + no_pre_us + no_training + no_test]; //stores timing information of the stimuli
 int stimulus_count = 0; //counts the number of stimuli given
 int[] probe = new int[no_probe]; //positions of probe trials
 int led = 0; //status of led
-String[] trial = {}; // holds whether a particular trial is preCS or preUS or whatever
-int US = 0; // has the US been delivered in a particular trial?
+String[] trial = {}; // holds whether a particular trial is precs or preus or whatever
+int us = 0; // has the us been delivered in a particular trial?
 int triggered = 0; //has Bonsai been triggered yet?
 int entered = 0; //
 String[] probe_str = {};

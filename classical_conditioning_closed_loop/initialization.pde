@@ -108,7 +108,7 @@ void pick_probe()
     for(i = 0; i < probe.length; i++)
     {
       print(probe[i] + ", ");
-      probe[i] += (no_pre_CS + no_pre_US);
+      probe[i] += (no_pre_cs + no_pre_us);
     }
     
     int index = 0;
@@ -120,15 +120,15 @@ void pick_probe()
         trial = append(trial, "probe");
         index++;
       }
-      else if(i < no_pre_CS)
+      else if(i < no_pre_cs)
       {
-        trial = append(trial, "preCS");
+        trial = append(trial, "precs");
       }
-      else if(i < (no_pre_CS + no_pre_US))
+      else if(i < (no_pre_cs + no_pre_us))
       {
-        trial = append(trial, "preUS");
+        trial = append(trial, "preus");
       }
-      else if(i < (no_pre_CS + no_pre_US + no_training))
+      else if(i < (no_pre_cs + no_pre_us + no_training))
       {
         trial = append(trial, "training");
       }

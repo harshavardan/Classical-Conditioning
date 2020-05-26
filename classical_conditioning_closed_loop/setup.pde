@@ -12,7 +12,7 @@ void setup()
   ///////////////////Classical Conditioning/////////////////////////////
   
   arduino = new Arduino(this, Arduino.list()[0], 57600);
-  arduino.pinMode(CS_pin, Arduino.OUTPUT);
+  arduino.pinMode(cs_pin, Arduino.OUTPUT);
   
   if(random)
   generate_random_timing();

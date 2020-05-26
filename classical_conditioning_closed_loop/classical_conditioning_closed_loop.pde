@@ -36,19 +36,19 @@ boolean init = false; // have the files to be written been created?
 
 //////////////////////////////////////////////////////////////////////
 
-/* Classical conditioning with light as CS and shock as US. 
-A number of CS and US can be given to establish baseline 
-responses before training begins. During training, the CS 
-goes on and the US can be delivered anywhere within the CS.
+/* Classical conditioning with light as cs and shock as us. 
+A number of cs and us can be given to establish baseline 
+responses before training begins. During training, the cs 
+goes on and the us can be delivered anywhere within the cs.
 Probe trials can be randomly delivered during training. 
-Finally, CS-only test trials are given to extinguish learning.*/ 
+Finally, cs-only test trials are given to extinguish learning.*/ 
 
 ///////////////////Classical Conditioning/////////////////////////////
 
 import processing.serial.*;
 import cc.arduino.*;
 Arduino arduino;
-int CS_pin = 2;
-int US_pin = 12;
+int cs_pin = 2;
+int us_pin = 12;
 
 //////////////////////////////////////////////////////////////////////
