@@ -27,21 +27,26 @@ void draw()
   
   // writing data
   
-  data[0] = str(x_pos); // position of shader
-  data[1] = str(current_time);  // time at which that position was updated
+  cl_data[0] = str(x_pos); // position of shader
+  cl_data[1] = str(current_time);  // time at which that position was updated
   
   if(!init)
   {
-    for (int i = 0; i < dataWriter.length; i++)
+    for (int i = 0; i < cl_datawriter.length; i++)
     {
-      dataWriter[i] = createWriter(file_path + "/" + generate_date() + "/" + fish + "/" +  file_names[i] + ".txt");
+      cl_datawriter[i] = createWriter(file_path + "/" + generate_date() + "/" + fish + "/" +  cl_file_names[i] + ".txt");
     }
-    init = true;
+    
+    for (int i = 0; i < cc_datawriter.length; i++)
+    {
+      cc_datawriter[i] = createWriter(file_path + "/" + generate_date() + "/" + fish + "/" + cc_file_names[i] + ".txt");
+    }
+      init = true;
   }
   
-  for (int i = 0; i < dataWriter.length; i++)
+  for (int i = 0; i < cl_datawriter.length; i++)
   {
-    dataWriter[i].println(data[i]+','); //The comma separation is for legacy reasons
+    cl_datawriter[i].println(cl_data[i] + ','); //The comma separation is for legacy reasons
   }
   
   //////////////////////////////////////////////////////////////////////
@@ -56,13 +61,16 @@ void draw()
     {      
       arduino.digitalWrite(cs_pin, Arduino.HIGH);
       led = 1; //led on
+      cc_datawriter[0].println(millis() + ",");
+      cc_datawriter[1].println(trial[stimulus_count] + ",");
     }
       
     if(led == 1 && millis() - structure[stimulus_count] >= cs_dur)
     {
-      println(stimulus_count + ". cs delivered. Ended at " + millis() + " ms");
+      //println(stimulus_count + ". cs delivered. Ended at " + millis() + " ms");
       arduino.digitalWrite(cs_pin, Arduino.LOW);
       led = 0; //led off
+      cc_datawriter[0].println(millis() + ",");
       stimulus_count++;
     }
   }
@@ -73,12 +81,15 @@ void draw()
     if(millis() - structure[stimulus_count] <= us_dur)
     {
       arduino.digitalWrite(us_pin, Arduino.HIGH);
+      cc_datawriter[0].println(millis() + ",");
+      cc_datawriter[1].println(trial[stimulus_count] + ",");
     }
     
     else if(millis() > (structure[stimulus_count] + us_dur))
     {
-      println(stimulus_count + ". us delivered. Ended at " + millis() + " ms");
+      //println(stimulus_count + ". us delivered. Ended at " + millis() + " ms");
       arduino.digitalWrite(us_pin, Arduino.LOW);
+      cc_datawriter[0].println(millis() + ",");
       stimulus_count++;
     }
   }
@@ -90,26 +101,31 @@ void draw()
     {   
       arduino.digitalWrite(cs_pin, Arduino.HIGH);
       led = 1; //led on
+      cc_datawriter[0].println(millis() + ",");
+      cc_datawriter[1].println(trial[stimulus_count] + ",");
     }
     
     if (millis() - structure[stimulus_count] >= (cs_dur * us_pos) && millis() - structure[stimulus_count] < (cs_dur * us_pos + us_dur) && us == 0) // Delivery of us 
     {
       arduino.digitalWrite(us_pin, Arduino.HIGH);
       us = 1; // is the us being delivered now?
+      cc_datawriter[0].println(millis() + ",");
     }
     
     if(millis() - structure[stimulus_count] >= (cs_dur * us_pos + us_dur) && us == 1) // Turning off the us
     {
-      us = 0;
       arduino.digitalWrite(us_pin, Arduino.LOW);
-      print(stimulus_count + ". us delivered. Ended at " + millis() + " ms");
+      us = 0;
+      cc_datawriter[0].println(millis() + ",");
+      //print(stimulus_count + ". us delivered. Ended at " + millis() + " ms");
     }
     
      if(led == 1 && millis() - structure[stimulus_count] >= cs_dur) // Turning off the cs
     {
-      println(" and cs delivered. Ended at " + millis() + " ms");
+      //println(" and cs delivered. Ended at " + millis() + " ms");
       arduino.digitalWrite(cs_pin, Arduino.LOW);
       led = 0; //led off
+      cc_datawriter[0].println(millis() + ",");
       stimulus_count++;
     }
   }
@@ -121,13 +137,16 @@ void draw()
     {
       arduino.digitalWrite(cs_pin, Arduino.HIGH);
       led = 1; //led on
+      cc_datawriter[0].println(millis() + ",");
+      cc_datawriter[1].println(trial[stimulus_count] + ",");
     }
      
     if(led == 1 && millis() - structure[stimulus_count] >= cs_dur)
     {
-      println(stimulus_count + ". Probe trial delivered. Ended at " + millis() + " ms");
+      //println(stimulus_count + ". Probe trial delivered. Ended at " + millis() + " ms");
       arduino.digitalWrite(cs_pin, Arduino.LOW);
       led = 0; //led off
+      cc_datawriter[0].println(millis() + ",");
       stimulus_count++;
     }
   }
@@ -139,14 +158,17 @@ void draw()
     {
       arduino.digitalWrite(cs_pin, Arduino.HIGH);
       led = 1; //led on
+      cc_datawriter[0].println(millis() + ",");
+      cc_datawriter[1].println(trial[stimulus_count] + ",");
     }
     
     
     if(led == 1 && millis() - structure[stimulus_count] >= cs_dur)
     {
-      println(stimulus_count + ". cs delivered. Ended at " + millis() + " ms");
+      //println(stimulus_count + ". cs delivered. Ended at " + millis() + " ms");
       arduino.digitalWrite(cs_pin, Arduino.LOW);
       led = 0; //led off
+      cc_datawriter[0].println(millis() + ",");
       stimulus_count++;
     }
   }

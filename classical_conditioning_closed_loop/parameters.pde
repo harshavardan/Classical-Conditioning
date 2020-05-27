@@ -6,24 +6,24 @@ int scaling = 1; //factor to scale down times during debugging
 
 //randomization of ITIs
 boolean random = true; //are ITIs randomised?
-float max = 70000; //max ITI allowed
-float min = 50000; //min ITI allowed
+float max = 10000; //max ITI allowed
+float min = 15000; //min ITI allowed
+long iti = 30000 / scaling; //interval between training trials
 
 //structure of the experiment
 
-int init_delay = 30000 / scaling; //initial delay
+int init_delay = 10000 / scaling; //initial delay
 int no_pre_cs = 10;
 int no_pre_us = 10;
 int no_training = 20;
 int no_test = 10;
 int no_probe = 5; //number of probe trials interspersed in the training trials
-long wait = 30000 / scaling; //wait period before test trials
+long wait = 10000 / scaling; //wait period before test trials
 
 //cs and us parameters
 
 int cs_dur = 2000 / scaling; //time of led on in milli seconds
 int us_dur = 50/ scaling; //time of bright flash
-long iti = 30000 / scaling; //interval between training trials
 float us_pos = 0.5; //position of the us relative to the cs
 
 //others

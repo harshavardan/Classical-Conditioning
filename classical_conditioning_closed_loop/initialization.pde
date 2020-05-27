@@ -1,10 +1,10 @@
 ////////////////////Closed Loop Stuff//////////////////////////////
 
-String[] data = new String[2];
-PrintWriter[] dataWriter = new PrintWriter[2];
+String[] cl_data = new String[2];
+PrintWriter[] cl_datawriter = new PrintWriter[2];
 PrintWriter notes;
 String time=(str(hour())+":"+str(minute())+":"+str(second()));
-String[] file_names = {"grating","time"};
+String[] cl_file_names = {"grating","time_stamp"};
 
 // lowpass filter
 
@@ -42,10 +42,16 @@ void keyPressed()
 {
     if (key == ESC)
   {
-    for (int i = 0; i < dataWriter.length; i++) 
+    for (int i = 0; i < cl_datawriter.length; i++) 
     {
-      dataWriter[i].flush();
-      dataWriter[i].close();
+      cl_datawriter[i].flush();
+      cl_datawriter[i].close();
+    }
+    
+    for (int i = 0; i < cc_datawriter.length; i++) 
+    {
+      cc_datawriter[i].flush();
+      cc_datawriter[i].close();
     }
     
     notes.println();
@@ -60,6 +66,11 @@ void keyPressed()
 
 //////////////////////////////////////////////////////////////////////
 
+///////////////////Classical Conditioning/////////////////////////////
+
+String[] cc_data = new String[2];
+PrintWriter[] cc_datawriter = new PrintWriter[2];
+String[] cc_file_names = {"timing", "stimulus"};
 
 void generate_timing()
 {
