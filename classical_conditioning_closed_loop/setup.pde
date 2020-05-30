@@ -13,6 +13,7 @@ void setup()
   
   arduino = new Arduino(this, Arduino.list()[0], 57600);
   arduino.pinMode(cs_pin, Arduino.OUTPUT);
+  arduino.pinMode(us_pin, Arduino.OUTPUT);
   
   if(random)
   generate_random_timing();

@@ -49,6 +49,7 @@ import processing.serial.*;
 import cc.arduino.*;
 Arduino arduino;
 int cs_pin = 2;
-int us_pin = 12;
+int us_pin = 13;
+String current = "3mA";
 
 //////////////////////////////////////////////////////////////////////
