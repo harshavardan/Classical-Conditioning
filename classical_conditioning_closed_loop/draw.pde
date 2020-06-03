@@ -82,7 +82,7 @@ void draw()
   {
     if(us == 0 && millis() - structure[stimulus_count] <= us_dur)
     {
-      arduino.analogWrite(us_pin, 255);
+      arduino.digitalWrite(us_pin, Arduino.HIGH);
       cc_datawriter[0].println(str(millis()) + ",");
       cc_datawriter[1].println(trial[stimulus_count] + ",");
       us = 1;
@@ -92,7 +92,7 @@ void draw()
     
     else if(us == 1 && millis() > (structure[stimulus_count] + us_dur))
     {
-      arduino.analogWrite(us_pin, 0);
+      arduino.digitalWrite(us_pin, Arduino.LOW);
       us = 0;
       cc_datawriter[0].println(str(millis()) + ",");
       stimulus_count++;
