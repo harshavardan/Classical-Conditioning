@@ -63,6 +63,7 @@ void draw()
       cc_datawriter[0].println(str(millis()) + ",");
       cc_datawriter[1].println(trial[stimulus_count] + ",");
       cs = 1; //cs on
+      background(255);
       print(stimulus_count + ". CS on: " + millis() + " ms");
     }
 
@@ -72,6 +73,7 @@ void draw()
       us = 1; // is the us being delivered now?
       cc_datawriter[0].println(str(millis()) + ",");
       print(", US on: " + millis() + " ms");
+      background(color(255, 204, 0));
     }
 
     if (us == 1 && millis() - structure[stimulus_count] >= (cs_dur * us_pos + us_dur) && us == 1) // Turning off the us
@@ -80,6 +82,7 @@ void draw()
       us = 0;
       cc_datawriter[0].println(str(millis()) + ",");
       print(", US off: " + millis() + " ms");
+      background(255);
     }
 
     if (cs == 1 && millis() - structure[stimulus_count] >= cs_dur) // Turning off the cs
@@ -89,6 +92,7 @@ void draw()
       cc_datawriter[0].println(str(millis()) + ",");
       stimulus_count++;
       println(", CS off: " + millis() + " ms");
+      background(0);
     }
   }
 

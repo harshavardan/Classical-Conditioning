@@ -2,10 +2,10 @@
 <WorkflowBuilder Version="2.5.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:p1="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:p2="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:osc="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -18,9 +18,30 @@
           <p1:GrabMode>BufferFrames</p1:GrabMode>
         </Combinator>
       </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Image</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:Average" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Val0</Selector>
+      </Expression>
+      <Expression xsi:type="GreaterThan">
+        <Operand xsi:type="DoubleProperty">
+          <Value>30</Value>
+        </Operand>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:DistinctUntilChanged" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:TriggeredWindow">
+          <rx:Count xsi:nil="true" />
+        </Combinator>
+      </Expression>
       <Expression xsi:type="SelectMany">
-        <Name>MotionDetect</Name>
-        <Description>Detects motion in incoming video stream and generates a UDP message. The UDP message can be read elsewhere to complete the closed-loop feedback</Description>
+        <Name>send OSC</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
@@ -28,16 +49,6 @@
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Image</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Crop">
-                <cv:RegionOfInterest>
-                  <cv:X>224</cv:X>
-                  <cv:Y>196</cv:Y>
-                  <cv:Width>204</cv:Width>
-                  <cv:Height>256</cv:Height>
-                </cv:RegionOfInterest>
-              </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
@@ -56,13 +67,10 @@
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Smooth">
-                <cv:SmoothType>Median</cv:SmoothType>
-                <cv:Size1>3</cv:Size1>
-                <cv:Size2>1</cv:Size2>
-                <cv:Sigma1>0</cv:Sigma1>
-                <cv:Sigma2>0</cv:Sigma2>
-              </Combinator>
+              <Combinator xsi:type="dsp:Average" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Val0</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Skip">
@@ -72,96 +80,44 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:AbsoluteDifference" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Threshold">
-                <cv:ThresholdValue>10</cv:ThresholdValue>
-                <cv:MaxValue>255</cv:MaxValue>
-                <cv:ThresholdType>Binary</cv:ThresholdType>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Average" />
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Val0</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Rescale">
-                <dsp:Min>0</dsp:Min>
-                <dsp:Max>10</dsp:Max>
-                <dsp:RangeMin>0</dsp:RangeMin>
-                <dsp:RangeMax>2</dsp:RangeMax>
-                <dsp:RescaleType>Linear</dsp:RescaleType>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="p2:SendMessage">
-              <p2:Connection>UdpSend</p2:Connection>
-              <p2:Address>/number</p2:Address>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:TimeInterval" />
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Interval.TotalMilliseconds</Selector>
+            <Expression xsi:type="GreaterThan" />
+            <Expression xsi:type="osc:SendMessage">
+              <osc:Connection>fromBonsai</osc:Connection>
+              <osc:Address>/number</osc:Address>
             </Expression>
             <Expression xsi:type="io:CsvWriter">
-              <io:FileName>D:\ClosedLoopBonsai_Temp\Time_Interval_.csv</io:FileName>
+              <io:FileName>C:\Users\user\OneDrive\Desktop\osc.csv</io:FileName>
               <io:Append>false</io:Append>
-              <io:Overwrite>true</io:Overwrite>
+              <io:Overwrite>false</io:Overwrite>
               <io:Suffix>FileCount</io:Suffix>
               <io:IncludeHeader>false</io:IncludeHeader>
-              <io:CompatibilityMode>true</io:CompatibilityMode>
-            </Expression>
-            <Expression xsi:type="io:CsvWriter">
-              <io:FileName>D:\ClosedLoopBonsai_Temp\Raw_Motion_.csv</io:FileName>
-              <io:Append>false</io:Append>
-              <io:Overwrite>true</io:Overwrite>
-              <io:Suffix>FileCount</io:Suffix>
-              <io:IncludeHeader>false</io:IncludeHeader>
-              <io:CompatibilityMode>true</io:CompatibilityMode>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Metadata.embeddedTimeStamp</Selector>
-            </Expression>
-            <Expression xsi:type="io:CsvWriter">
-              <io:FileName>D:\ClosedLoopBonsai_Temp\Pointgrey_Metadata_.csv</io:FileName>
-              <io:Append>false</io:Append>
-              <io:Overwrite>true</io:Overwrite>
-              <io:Suffix>FileCount</io:Suffix>
-              <io:IncludeHeader>false</io:IncludeHeader>
-              <io:CompatibilityMode>true</io:CompatibilityMode>
             </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="0" To="18" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="4" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="2" To="5" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="5" To="7" Label="Source1" />
-            <Edge From="6" To="7" Label="Source2" />
+            <Edge From="5" To="7" Label="Source2" />
+            <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="13" To="17" Label="Source1" />
-            <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
+      <Edge From="0" To="6" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="6" Label="Source2" />
+      <Edge From="6" To="7" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

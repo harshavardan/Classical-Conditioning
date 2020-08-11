@@ -1,5 +1,7 @@
 void setup()
 {  
+  size(500, 500);
+  background(0);
   arduino = new Arduino(this, Arduino.list()[0], 57600);
   arduino.pinMode(cs_pin, Arduino.OUTPUT);
   arduino.pinMode(us_pin, Arduino.OUTPUT);
