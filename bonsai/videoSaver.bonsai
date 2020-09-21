@@ -1,33 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.3.0">
-  <Workflow xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q1="clr-namespace:Bonsai.CLEyeMulticam;assembly=Bonsai.CLEyeMulticam" xmlns:q2="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc" xmlns:q3="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision" xmlns:q4="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:q5="clr-namespace:Bonsai.IO;assembly=Bonsai.System" xmlns="https://horizongir.org/bonsai">
+<WorkflowBuilder Version="2.5.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:osc="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc"
+                 xmlns:p1="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
     <Nodes>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="q1:CLEyeSource">
-          <q1:CameraGuid xsi:nil="true" />
-          <q1:CameraIndex>0</q1:CameraIndex>
-          <q1:ColorMode>CLEYE_COLOR_RAW</q1:ColorMode>
-          <q1:Resolution>CLEYE_QVGA</q1:Resolution>
-          <q1:FrameRate>120</q1:FrameRate>
-          <q1:AutoGain>false</q1:AutoGain>
-          <q1:AutoExposure>false</q1:AutoExposure>
-          <q1:AutoWhiteBalance>true</q1:AutoWhiteBalance>
-          <q1:Gain>43</q1:Gain>
-          <q1:Exposure>271</q1:Exposure>
-          <q1:WhiteBalanceRed>0</q1:WhiteBalanceRed>
-          <q1:WhiteBalanceGreen>0</q1:WhiteBalanceGreen>
-          <q1:WhiteBalanceBlue>0</q1:WhiteBalanceBlue>
-        </Combinator>
+      <Expression xsi:type="osc:ReceiveMessage">
+        <osc:Connection>UdpConfiguration</osc:Connection>
+        <osc:Address>/test</osc:Address>
+        <osc:TypeTag />
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="TriggeredWindow">
-          <Count xsi:nil="true" />
+        <Combinator xsi:type="p1:FlyCapture">
+          <p1:Index>0</p1:Index>
+          <p1:ColorProcessing>Default</p1:ColorProcessing>
+          <p1:NumBuffers>10</p1:NumBuffers>
+          <p1:GrabMode>BufferFrames</p1:GrabMode>
         </Combinator>
       </Expression>
-      <Expression xsi:type="q2:ReceiveMessage">
-        <q2:Connection>fromProcessing</q2:Connection>
-        <q2:Address>/test</q2:Address>
-        <q2:TypeTag>i</q2:TypeTag>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Image</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:TriggeredWindow">
+          <rx:Count xsi:nil="true" />
+        </Combinator>
       </Expression>
       <Expression xsi:type="SelectMany">
         <Workflow>
@@ -36,199 +38,103 @@
               <Name>Source1</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q3:Grayscale" />
+              <Combinator xsi:type="cv:Grayscale" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q3:Smooth">
-                <q3:SmoothType>Median</q3:SmoothType>
-                <q3:Size1>3</q3:Size1>
-                <q3:Size2>1</q3:Size2>
-                <q3:Sigma1>0</q3:Sigma1>
-                <q3:Sigma2>0</q3:Sigma2>
+              <Combinator xsi:type="cv:Smooth">
+                <cv:SmoothType>Median</cv:SmoothType>
+                <cv:Size1>3</cv:Size1>
+                <cv:Size2>1</cv:Size2>
+                <cv:Sigma1>0</cv:Sigma1>
+                <cv:Sigma2>0</cv:Sigma2>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="Skip">
-                <Count>1</Count>
+              <Combinator xsi:type="rx:Skip">
+                <rx:Count>1</rx:Count>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="Zip" />
+              <Combinator xsi:type="rx:Zip" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q4:AbsoluteDifference" />
+              <Combinator xsi:type="dsp:AbsoluteDifference" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q4:Average" />
+              <Combinator xsi:type="cv:Threshold">
+                <cv:ThresholdValue>20</cv:ThresholdValue>
+                <cv:MaxValue>255</cv:MaxValue>
+                <cv:ThresholdType>Binary</cv:ThresholdType>
+              </Combinator>
             </Expression>
-            <Expression xsi:type="q5:CsvWriter">
-              <q5:FileName>E:\Harshavardan\classicalConditioningCode\data\rawMotion.csv</q5:FileName>
-              <q5:Append>false</q5:Append>
-              <q5:Overwrite>false</q5:Overwrite>
-              <q5:Suffix>FileCount</q5:Suffix>
-              <q5:IncludeHeader>false</q5:IncludeHeader>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="dsp:Average" />
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Source.Val0</Selector>
+              <Selector>Val0</Selector>
+            </Expression>
+            <Expression xsi:type="io:CsvWriter">
+              <io:FileName>D:\Harshavardan\classical-conditioning\data\rawMotion.csv</io:FileName>
+              <io:Append>false</io:Append>
+              <io:Overwrite>false</io:Overwrite>
+              <io:Suffix>FileCount</io:Suffix>
+              <io:IncludeHeader>false</io:IncludeHeader>
+              <io:CompatibilityMode>true</io:CompatibilityMode>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Timestamp" />
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Source.Timestamp.TimeOfDay.TotalMilliseconds</Selector>
+              <Selector>Timestamp.TimeOfDay.TotalMilliseconds</Selector>
+            </Expression>
+            <Expression xsi:type="io:CsvWriter">
+              <io:FileName>E:\Harshavardan\classicalConditioningCode\data\timestamp.csv</io:FileName>
+              <io:Append>false</io:Append>
+              <io:Overwrite>false</io:Overwrite>
+              <io:Suffix>FileCount</io:Suffix>
+              <io:IncludeHeader>false</io:IncludeHeader>
+              <io:CompatibilityMode>true</io:CompatibilityMode>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="Timestamp" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q3:VideoWriter">
-                <q3:FileName>E:\Harshavardan\classicalConditioningCode\data\video.avi</q3:FileName>
-                <q3:Suffix>FileCount</q3:Suffix>
-                <q3:Buffered>true</q3:Buffered>
-                <q3:Overwrite>false</q3:Overwrite>
-                <q3:FourCC>FMP4</q3:FourCC>
-                <q3:FrameRate>30</q3:FrameRate>
-                <q3:FrameSize>
-                  <q3:Width>0</q3:Width>
-                  <q3:Height>0</q3:Height>
-                </q3:FrameSize>
-                <q3:ResizeInterpolation>NearestNeighbor</q3:ResizeInterpolation>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="q5:CsvWriter">
-              <q5:FileName>E:\Harshavardan\classicalConditioningCode\data\timestamp.csv</q5:FileName>
-              <q5:Append>false</q5:Append>
-              <q5:Overwrite>false</q5:Overwrite>
-              <q5:Suffix>FileCount</q5:Suffix>
-              <q5:IncludeHeader>false</q5:IncludeHeader>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q3:Crop">
-                <q3:RegionOfInterest>
-                  <q3:X>35</q3:X>
-                  <q3:Y>1</q3:Y>
-                  <q3:Width>221</q3:Width>
-                  <q3:Height>237</q3:Height>
-                </q3:RegionOfInterest>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="q3:Threshold">
-                <q3:ThresholdValue>15</q3:ThresholdValue>
-                <q3:MaxValue>255</q3:MaxValue>
-                <q3:ThresholdType>Binary</q3:ThresholdType>
+              <Combinator xsi:type="cv:VideoWriter">
+                <cv:FileName>D:\Harshavardan\classical-conditioning\data\video.avi</cv:FileName>
+                <cv:Suffix>FileCount</cv:Suffix>
+                <cv:Buffered>true</cv:Buffered>
+                <cv:Overwrite>false</cv:Overwrite>
+                <cv:FourCC>FMP4</cv:FourCC>
+                <cv:FrameRate>30</cv:FrameRate>
+                <cv:FrameSize>
+                  <cv:Width>0</cv:Width>
+                  <cv:Height>0</cv:Height>
+                </cv:FrameSize>
+                <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
             </Expression>
           </Nodes>
           <Edges>
-            <Edge>
-              <From>0</From>
-              <To>13</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>1</From>
-              <To>2</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>2</From>
-              <To>3</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>2</From>
-              <To>4</To>
-              <Label>Source2</Label>
-            </Edge>
-            <Edge>
-              <From>2</From>
-              <To>10</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>2</From>
-              <To>11</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>3</From>
-              <To>4</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>4</From>
-              <To>5</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>5</From>
-              <To>14</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>6</From>
-              <To>8</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>8</From>
-              <To>7</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>9</From>
-              <To>12</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>10</From>
-              <To>9</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>13</From>
-              <To>1</To>
-              <Label>Source1</Label>
-            </Edge>
-            <Edge>
-              <From>14</From>
-              <To>6</To>
-              <Label>Source1</Label>
-            </Edge>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="2" To="4" Label="Source2" />
+            <Edge From="2" To="10" Label="Source1" />
+            <Edge From="2" To="13" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
     </Nodes>
     <Edges>
-      <Edge>
-        <From>0</From>
-        <To>1</To>
-        <Label>Source1</Label>
-      </Edge>
-      <Edge>
-        <From>1</From>
-        <To>3</To>
-        <Label>Source1</Label>
-      </Edge>
-      <Edge>
-        <From>2</From>
-        <To>1</To>
-        <Label>Source2</Label>
-      </Edge>
+      <Edge From="0" To="3" Label="Source2" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
     </Edges>
   </Workflow>
-  <ExtensionTypes>
-    <Type>Bonsai.CLEyeMulticam.CLEyeSource, Bonsai.CLEyeMulticam, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Reactive.TriggeredWindow, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Osc.ReceiveMessage, Bonsai.Osc, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Vision.Grayscale, Bonsai.Vision, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Vision.Smooth, Bonsai.Vision, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Reactive.Skip, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Reactive.Zip, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Dsp.AbsoluteDifference, Bonsai.Dsp, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Dsp.Average, Bonsai.Dsp, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.IO.CsvWriter, Bonsai.System, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Reactive.Timestamp, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Vision.VideoWriter, Bonsai.Vision, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Vision.Crop, Bonsai.Vision, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Vision.Threshold, Bonsai.Vision, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
-  </ExtensionTypes>
 </WorkflowBuilder>

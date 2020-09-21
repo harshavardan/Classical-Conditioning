@@ -133,6 +133,7 @@ void us()
 {
   oscP5.send(myMessage, location); 
   arduino.digitalWrite(us_pin, Arduino.HIGH);
+  println("US");
   cc_datawriter[0].println(str(millis()) + ",");
   cc_datawriter[1].println(trial[stimulus_count] + ",");
   wait(us_dur);
@@ -145,10 +146,12 @@ void train()
 {
   oscP5.send(myMessage, location);
   arduino.digitalWrite(cs_pin, Arduino.HIGH);
+  println("CS");
   cc_datawriter[0].println(str(millis()) + ",");
   cc_datawriter[1].println(trial[stimulus_count] + ",");
   wait(int(us_pos * cs_dur));
   arduino.digitalWrite(us_pin, Arduino.HIGH);
+  println("US");
   cc_datawriter[0].println(str(millis()) + ",");
   wait(us_dur);
   arduino.digitalWrite(us_pin, Arduino.LOW);
