@@ -1,0 +1,18 @@
+Genotype			:	Indian Wild Type
+Age				:	7
+Fish id				:	F1
+Date				:	200918
+Initial delay (ms)		:	10000
+Wait period before test		:	10000
+No. pre training CS		:	5
+No. pre-training US		:	5
+No. training trials		:	50
+No. test trials			:	10
+No. probe trials		:	5
+CS duration (ms)		:	2000
+US duration (US)		:	100
+US position			:	0.5
+Current value (mA)		:	3mA
+ITI (ms)			:	10000
+
+Comments			:	
