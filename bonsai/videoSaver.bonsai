@@ -27,6 +27,16 @@
         <Selector>Image</Selector>
       </Expression>
       <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Crop">
+          <cv:RegionOfInterest>
+            <cv:X>6</cv:X>
+            <cv:Y>21</cv:Y>
+            <cv:Width>722</cv:Width>
+            <cv:Height>528</cv:Height>
+          </cv:RegionOfInterest>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:TriggeredWindow">
           <rx:Count xsi:nil="true" />
         </Combinator>
@@ -62,7 +72,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Threshold">
-                <cv:ThresholdValue>20</cv:ThresholdValue>
+                <cv:ThresholdValue>50</cv:ThresholdValue>
                 <cv:MaxValue>255</cv:MaxValue>
                 <cv:ThresholdType>Binary</cv:ThresholdType>
               </Combinator>
@@ -131,10 +141,11 @@
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="0" To="3" Label="Source2" />
+      <Edge From="0" To="4" Label="Source2" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
       <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

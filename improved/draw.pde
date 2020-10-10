@@ -4,7 +4,7 @@ void draw()
   {
     for (int i = 0; i < cc_datawriter.length; i++)
     {
-      cc_datawriter[i] = createWriter(file_path + cc_file_names[i] + ".txt");
+      cc_datawriter[i] = createWriter(file_path + cc_file_names[i] + ".csv");
     }
     init = true;
     notes = createWriter(file_path + "notes.txt");
@@ -54,6 +54,12 @@ void draw()
       cc_datawriter[i].flush();
       cc_datawriter[i].close();
     }
+    
+    notes.println();
+    notes.println("Comments\t\t\t:\t");
+    notes.flush();
+    notes.close();
+
     
     println("Program ended!");
     noLoop();

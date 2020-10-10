@@ -11,17 +11,17 @@ long iti = 60000 / scaling; //interval between training trials
 //timing of the experiment
 
 int init_delay = 300000 / scaling; //initial delay
-int no_pre_cs = 10;
-int no_pre_us = 10;
+int no_pre_cs = 5;
+int no_pre_us = 5;
 int no_training = 100;
-int no_test = 50;
+int no_test = 10;
 int no_probe = int(no_training / 10); //number of probe trials interspersed in the training trials
-long wait = 600000 / scaling; //wait period before test trials
+long wait = 300000 / scaling; //wait period before test trials
 
 //cs and us parameters
 
 int cs_dur = 4000 / scaling; //time of cs on in milli seconds
-int us_dur = 10/ scaling; //time of bright flash
+int us_dur = 50/ scaling; //time of bright flash
 float us_pos = 0.5; //position of the us relative to the cs
 int cs_pin = 13;
 int us_pin = 2;
