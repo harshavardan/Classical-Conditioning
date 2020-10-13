@@ -20,7 +20,5 @@ String dpf = "8";
 String fish = "F1";
 String file_path = "../data/" + generate_date() + "/" + fish + "/";
 
-//write fish information to notes
-
 //////////////////////////////////////////////////////////////////////
 
