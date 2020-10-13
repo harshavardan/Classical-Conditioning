@@ -10,6 +10,7 @@ long iti = 60000 / scaling; //interval between training trials
 
 //timing of the experiment
 
+int baseline = 2000; // how long to wait after sending OSC message to Bonsai to deliver the stimulus?
 int init_delay = 300000 / scaling; //initial delay
 int no_pre_cs = 5;
 int no_pre_us = 5;

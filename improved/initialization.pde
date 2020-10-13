@@ -119,6 +119,7 @@ void generate_trials()
 void cs()
 {
   oscP5.send(myMessage, location); 
+  wait(baseline);
   arduino.digitalWrite(cs_pin, Arduino.HIGH);
   println("CS");
   cc_datawriter[0].println(str(millis()) + ",");
@@ -132,6 +133,7 @@ void cs()
 void us()
 {
   oscP5.send(myMessage, location); 
+  wait(baseline);
   arduino.digitalWrite(us_pin, Arduino.HIGH);
   println("US");
   cc_datawriter[0].println(str(millis()) + ",");
@@ -145,6 +147,7 @@ void us()
 void train()
 {
   oscP5.send(myMessage, location);
+  wait(baseline);
   arduino.digitalWrite(cs_pin, Arduino.HIGH);
   println("CS");
   cc_datawriter[0].println(str(millis()) + ",");
