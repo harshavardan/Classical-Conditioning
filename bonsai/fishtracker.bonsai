@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.5.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns:p1="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:FileCapture">
+          <cv:FileName>E:\Sawani\data\210323\F1 control block 1\video1.avi</cv:FileName>
+          <cv:PlaybackRate>10000</cv:PlaybackRate>
+          <cv:StartPosition>0</cv:StartPosition>
+          <cv:PositionUnits>Frames</cv:PositionUnits>
+          <cv:Loop>false</cv:Loop>
+          <cv:Playing>true</cv:Playing>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Smooth">
+          <cv:SmoothType>Median</cv:SmoothType>
+          <cv:Size1>5</cv:Size1>
+          <cv:Size2>0</cv:Size2>
+          <cv:Sigma1>0</cv:Sigma1>
+          <cv:Sigma2>0</cv:Sigma2>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:ConvertColor">
+          <cv:Conversion>Bgr2Gray</cv:Conversion>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:LoadImage">
+          <cv:FileName>E:\Sawani\data\210323\F1 control block 1\video0.tif</cv:FileName>
+          <cv:Mode>Unchanged</cv:Mode>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Smooth">
+          <cv:SmoothType>Median</cv:SmoothType>
+          <cv:Size1>5</cv:Size1>
+          <cv:Size2>0</cv:Size2>
+          <cv:Sigma1>0</cv:Sigma1>
+          <cv:Sigma2>0</cv:Sigma2>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:AbsoluteDifference" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Threshold">
+          <cv:ThresholdValue>21</cv:ThresholdValue>
+          <cv:MaxValue>255</cv:MaxValue>
+          <cv:ThresholdType>Binary</cv:ThresholdType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:FindContours">
+          <cv:Mode>External</cv:Mode>
+          <cv:Method>ChainApproxNone</cv:Method>
+          <cv:Offset>
+            <cv:X>0</cv:X>
+            <cv:Y>0</cv:Y>
+          </cv:Offset>
+          <cv:MinArea xsi:nil="true" />
+          <cv:MaxArea xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:LargestBinaryRegion" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Centroid" />
+      </Expression>
+      <Expression xsi:type="io:CsvWriter">
+        <io:FileName>E:\Sawani\data\210323\F1 control block 1\centroid_test0.csv</io:FileName>
+        <io:Delimiter>,</io:Delimiter>
+        <io:Append>false</io:Append>
+        <io:Overwrite>true</io:Overwrite>
+        <io:Suffix>None</io:Suffix>
+        <io:IncludeHeader>false</io:IncludeHeader>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="p1:PythonTransform">
+        <p1:Name>OverlayTrajectory</p1:Name>
+        <p1:Script>import clr
+import math
+clr.AddReference("OpenCV.Net")
+from OpenCV.Net import *
+
+startcolor = Scalar.Rgb(0,255,0)
+endcolor = Scalar.Rgb(0,0,255)
+thickness = 3
+maxpoints = 30
+points = []
+
+def interpolate(x,target,step):
+  return x + step * (target - x)
+
+@returns(IplImage)
+def process(value):
+  output = value.Item2.Clone()
+  centroid = value.Item1
+
+  # Add point to circular buffer
+  points.insert(0,centroid)
+  while len(points) &gt; maxpoints:
+    points.pop()
+
+  # Draw all point pairs in buffer
+  for i,(p1,p2) in enumerate(zip(points,points[1:])):
+    if math.isnan(p1.X) or math.isnan(p2.X):
+      continue
+
+    step = i / float(maxpoints)
+    b = interpolate(startcolor.Val0,endcolor.Val0,step)
+    g = interpolate(startcolor.Val1,endcolor.Val1,step)
+    r = interpolate(startcolor.Val2,endcolor.Val2,step)
+    CV.Line(output,Point(p1),Point(p2),Scalar.Rgb(r,g,b),thickness)
+
+  return output</p1:Script>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="0" To="3" Label="Source1" />
+      <Edge From="0" To="13" Label="Source2" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="5" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source2" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="11" To="13" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="13" To="14" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
