@@ -18,7 +18,7 @@ Arduino arduino;
 String genotype = "Indian Wild Type";
 String dpf = "8";
 String fish = "F1";
-String file_path = "../data/" + generate_date() + "/" + fish + "/";
+String file_path = "../../data/" + generate_date() + "/" + fish + "/";
 
 //////////////////////////////////////////////////////////////////////
 
