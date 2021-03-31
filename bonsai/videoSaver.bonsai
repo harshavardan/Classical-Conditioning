@@ -5,7 +5,6 @@
                  xmlns:p1="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -23,19 +22,6 @@
           <p1:GrabMode>BufferFrames</p1:GrabMode>
         </Combinator>
       </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>Image</Selector>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="cv:Crop">
-          <cv:RegionOfInterest>
-            <cv:X>6</cv:X>
-            <cv:Y>21</cv:Y>
-            <cv:Width>722</cv:Width>
-            <cv:Height>528</cv:Height>
-          </cv:RegionOfInterest>
-        </Combinator>
-      </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:TriggeredWindow">
           <rx:Count xsi:nil="true" />
@@ -47,72 +33,17 @@
             <Expression xsi:type="WorkflowInput">
               <Name>Source1</Name>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Grayscale" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Smooth">
-                <cv:SmoothType>Median</cv:SmoothType>
-                <cv:Size1>3</cv:Size1>
-                <cv:Size2>1</cv:Size2>
-                <cv:Sigma1>0</cv:Sigma1>
-                <cv:Sigma2>0</cv:Sigma2>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Skip">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:AbsoluteDifference" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Threshold">
-                <cv:ThresholdValue>50</cv:ThresholdValue>
-                <cv:MaxValue>255</cv:MaxValue>
-                <cv:ThresholdType>Binary</cv:ThresholdType>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Average" />
-            </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Val0</Selector>
-            </Expression>
-            <Expression xsi:type="io:CsvWriter">
-              <io:FileName>D:\Harshavardan\classical-conditioning\data\rawMotion.csv</io:FileName>
-              <io:Append>false</io:Append>
-              <io:Overwrite>false</io:Overwrite>
-              <io:Suffix>FileCount</io:Suffix>
-              <io:IncludeHeader>false</io:IncludeHeader>
-              <io:CompatibilityMode>true</io:CompatibilityMode>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Timestamp" />
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Timestamp.TimeOfDay.TotalMilliseconds</Selector>
-            </Expression>
-            <Expression xsi:type="io:CsvWriter">
-              <io:FileName>D:\Harshavardan\classical-conditioning\data\timestamp.csv</io:FileName>
-              <io:Append>false</io:Append>
-              <io:Overwrite>false</io:Overwrite>
-              <io:Suffix>FileCount</io:Suffix>
-              <io:IncludeHeader>false</io:IncludeHeader>
-              <io:CompatibilityMode>true</io:CompatibilityMode>
+              <Selector>Image</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>D:\Harshavardan\classical-conditioning\data\video.avi</cv:FileName>
+                <cv:FileName>E:\Sawani\data\video.avi</cv:FileName>
                 <cv:Suffix>FileCount</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>FMP4</cv:FourCC>
-                <cv:FrameRate>30</cv:FrameRate>
+                <cv:FrameRate>100</cv:FrameRate>
                 <cv:FrameSize>
                   <cv:Width>0</cv:Width>
                   <cv:Height>0</cv:Height>
@@ -120,32 +51,30 @@
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata.embeddedTimeStamp</Selector>
+            </Expression>
+            <Expression xsi:type="io:CsvWriter">
+              <io:FileName>E:\Sawani\data\timestamp.csv</io:FileName>
+              <io:Append>false</io:Append>
+              <io:Overwrite>true</io:Overwrite>
+              <io:Suffix>FileCount</io:Suffix>
+              <io:IncludeHeader>false</io:IncludeHeader>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
+            <Edge From="0" To="3" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="2" To="4" Label="Source2" />
-            <Edge From="2" To="10" Label="Source1" />
-            <Edge From="2" To="13" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="0" To="4" Label="Source2" />
+      <Edge From="0" To="2" Label="Source2" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
-      <Edge From="3" To="4" Label="Source1" />
-      <Edge From="4" To="5" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
