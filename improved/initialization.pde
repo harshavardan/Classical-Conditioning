@@ -179,7 +179,7 @@ void write_notes()
   notes.println("Fish id\t\t\t\t:\t" + fish);
   notes.println("Date\t\t\t\t:\t" + generate_date());
   notes.println("Initial delay (ms)\t\t:\t" + init_delay);
-  notes.println("Baseline perios (ms)\t\t: \t" + baseline);
+  notes.println("Baseline period (ms)\t\t: \t" + baseline);
   notes.println("Wait period before test\t\t:\t" + wait);
   notes.println("No. pre training CS\t\t:\t" + no_pre_cs);
   notes.println("No. pre-training US\t\t:\t" + no_pre_us);
