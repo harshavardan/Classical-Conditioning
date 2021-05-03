@@ -14,6 +14,7 @@ void draw()
   //response to cs pre-training
   if (no_pre_cs != 0 && trial[stimulus_count] == "precs" && millis() >= init_delay && millis() >= timing[stimulus_count])
   {
+    println("Trial " + stimulus_count);
     cs();
     stimulus_count++;
   }
@@ -21,6 +22,7 @@ void draw()
   //response to us pre-training
   if (no_pre_us != 0 && trial[stimulus_count] == "preus" && millis() >= timing[stimulus_count])
   {
+    println("Trial " + stimulus_count);
     us();
     stimulus_count++;
   }
@@ -28,6 +30,7 @@ void draw()
   //training
   if (no_training != 0 && trial[stimulus_count] == "training" && millis() >= timing[stimulus_count])
   {
+    println("Trial " + stimulus_count);
     train();
     stimulus_count++;
   }
@@ -35,6 +38,7 @@ void draw()
   //probe trials
   if (no_probe != 0 && trial[stimulus_count] == "probe" && millis() >= timing[stimulus_count])
   {    
+    println("Trial " + stimulus_count);
     cs();
     stimulus_count++;
   }
@@ -42,6 +46,7 @@ void draw()
   //test trials
   if (no_test != 0 && trial[stimulus_count] == "test" && millis() >= timing[stimulus_count])
   {
+    println("Trial " + stimulus_count);
     cs();
     stimulus_count++;
   }

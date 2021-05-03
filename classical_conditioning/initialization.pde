@@ -174,27 +174,46 @@ void wait(int d)
   
 void write_notes()
 {
+  notes.println("Date\t\t\t\t:\t" + generate_date());
+  
+  notes.println();
+  notes.println("Fish information:");
+  notes.println();
+  
   notes.println("Genotype\t\t\t:\t" + genotype);
   notes.println("Age\t\t\t\t:\t" + dpf);
-  notes.println("Fish id\t\t\t\t:\t" + fish);
-  notes.println("Date\t\t\t\t:\t" + generate_date());
-  notes.println("Initial delay (ms)\t\t:\t" + init_delay);
+  notes.println("Fish ID\t\t\t\t:\t" + fish);
+  notes.println("Batch ID\t\t\t:\t" + batch_id);
+  
+  notes.println();
+  notes.println("Experiment parameters:");
+  notes.println();
+  
   notes.println("Baseline period (ms)\t\t: \t" + baseline);
-  notes.println("Wait period before test\t\t:\t" + wait);
-  notes.println("No. pre training CS\t\t:\t" + no_pre_cs);
-  notes.println("No. pre-training US\t\t:\t" + no_pre_us);
-  notes.println("No. training trials\t\t:\t" + no_training);
-  notes.println("No. test trials\t\t\t:\t" + no_test);
-  notes.println("No. probe trials\t\t:\t" + no_probe);
   notes.println("CS duration (ms)\t\t:\t" + cs_dur);
-  notes.println("US duration (US)\t\t:\t" + us_dur);
+  notes.println("US duration (ms)\t\t:\t" + us_dur);
   notes.println("US position\t\t\t:\t" + us_pos);
   notes.println("Current value (mA)\t\t:\t" + current);
+  notes.println("CS intensity (mW/cm2)\t\t:\t" + light_intensity);
+  
+  notes.println();
+  
+  notes.println("Initial delay (ms)\t\t:\t" + init_delay);
+  notes.println("No. pre-training CS\t\t:\t" + no_pre_cs);
+  notes.println("No. pre-training US\t\t:\t" + no_pre_us);
+  notes.println("No. training trials\t\t:\t" + no_training);
+  notes.println("No. probe trials\t\t:\t" + no_probe);
+  notes.println("Wait period before test (ms)\t:\t" + wait);
+  notes.println("No. test trials\t\t\t:\t" + no_test);
+  
+  
+  
+
   
   if (random)
   {
-    notes.println("Minimum ITI (ms)\t\t:\t" + min);
-    notes.println("Maximum ITI(ms)\t\t:\t" + max);
+    notes.println("Minimum ITI(ms)\t\t:\t" + min);
+    notes.println("Maximum ITI(ms)\t\t\t:\t" + max);
   }
   else
     notes.println("ITI (ms)\t\t\t:\t" + iti);
