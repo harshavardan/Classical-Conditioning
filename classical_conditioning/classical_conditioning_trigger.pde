@@ -16,9 +16,9 @@ Arduino arduino;
 //fish information
 
 String genotype = "Indian Wild Type";
-String dpf = "10";
-String fish = "F2";
-String batch_id = "2";
+String dpf = "-";
+String fish = "Dry_run";
+String batch_id = "-";
 String file_path = "../../data/" + generate_date() + "/" + fish + "/";
 
 //debugging
@@ -38,7 +38,7 @@ int baseline = 4000 / scaling; //how long to wait after sending OSC message to B
 int init_delay = 300000 / scaling; //initial delay
 int no_pre_cs = 5;
 int no_pre_us = 0;
-int no_training = 75;
+int no_training = 200;
 int no_test = 20;
 int no_probe = 0; //number of probe trials interspersed in the training trials
 long wait = 30000 / scaling; //wait period before test trials
@@ -49,6 +49,8 @@ int cs_dur = 4000 / scaling; //time of cs on in milli seconds
 int us_dur = 10 / scaling; //time of bright flash
 float us_pos = (cs_dur - us_dur)  * 1.0/ cs_dur; //position of the us within the cs
 int cs_pin = 8;
+int cs_trigger_pin = 3;
 int us_pin = 12;
+int us_trigger_pin = 2;
 String light_intensity = "not measured"; //mW/cm2
 String current = "4"; //mA

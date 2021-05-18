@@ -121,11 +121,13 @@ void cs()
   oscP5.send(myMessage, location); 
   wait(baseline);
   arduino.digitalWrite(cs_pin, Arduino.HIGH);
+  arduino.digitalWrite(cs_trigger_pin, Arduino.HIGH);
   println("CS");
   cc_datawriter[0].println(str(millis()) + ",");
   cc_datawriter[1].println(trial[stimulus_count] + ",");
   wait(cs_dur);
   arduino.digitalWrite(cs_pin, Arduino.LOW);
+  arduino.digitalWrite(cs_trigger_pin, Arduino.LOW);
   cc_datawriter[0].println(str(millis()) + ",");
 }
 
@@ -135,11 +137,13 @@ void us()
   oscP5.send(myMessage, location); 
   wait(baseline);
   arduino.digitalWrite(us_pin, Arduino.HIGH);
+  arduino.digitalWrite(us_trigger_pin, Arduino.HIGH);
   println("US");
   cc_datawriter[0].println(str(millis()) + ",");
   cc_datawriter[1].println(trial[stimulus_count] + ",");
   wait(us_dur);
   arduino.digitalWrite(us_pin, Arduino.LOW);
+  arduino.digitalWrite(us_trigger_pin, Arduino.LOW);
   cc_datawriter[0].println(str(millis()) + ",");
 }
 
@@ -149,18 +153,22 @@ void train()
   oscP5.send(myMessage, location);
   wait(baseline);
   arduino.digitalWrite(cs_pin, Arduino.HIGH);
+  arduino.digitalWrite(cs_trigger_pin, Arduino.HIGH);
   println("CS");
   cc_datawriter[0].println(str(millis()) + ",");
   cc_datawriter[1].println(trial[stimulus_count] + ",");
   wait(int(us_pos * cs_dur));
   arduino.digitalWrite(us_pin, Arduino.HIGH);
+  arduino.digitalWrite(us_trigger_pin, Arduino.HIGH);
   println("US");
   cc_datawriter[0].println(str(millis()) + ",");
   wait(us_dur);
   arduino.digitalWrite(us_pin, Arduino.LOW);
+  arduino.digitalWrite(us_trigger_pin, Arduino.LOW);
   cc_datawriter[0].println(str(millis()) + ",");
   wait(int((1 - us_pos) * cs_dur - us_dur));
   arduino.digitalWrite(cs_pin, Arduino.LOW);
+  arduino.digitalWrite(cs_trigger_pin, Arduino.LOW);
   cc_datawriter[0].println(str(millis()) + ",");
 }
 
