@@ -6,6 +6,11 @@ void setup()
   arduino.pinMode(us_pin, Arduino.OUTPUT);
   arduino.pinMode(cs_trigger_pin, Arduino.OUTPUT);
   arduino.pinMode(us_trigger_pin, Arduino.OUTPUT);
+  
+  arduino.digitalWrite(cs_pin, Arduino.LOW); 
+ arduino.digitalWrite(cs_trigger_pin, Arduino.LOW); 
+ arduino.digitalWrite(us_pin, Arduino.LOW); 
+ arduino.digitalWrite(us_trigger_pin, Arduino.LOW);
 
   if (random)
     generate_random_timing();

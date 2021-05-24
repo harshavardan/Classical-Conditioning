@@ -178,6 +178,15 @@ void wait(int d)
   long t = millis();
   while((millis() - t) <= d){}
 }
+
+//set all pins to LOW
+void set_zero()
+{
+ arduino.digitalWrite(cs_pin, Arduino.LOW); 
+ arduino.digitalWrite(cs_trigger_pin, Arduino.LOW); 
+ arduino.digitalWrite(us_pin, Arduino.LOW); 
+ arduino.digitalWrite(us_trigger_pin, Arduino.LOW); 
+}
   
 void write_notes()
 {

@@ -1,5 +1,7 @@
 void draw() 
 {  
+  set_zero();
+  
   if (!init)
   {
     for (int i = 0; i < cc_datawriter.length; i++)
@@ -9,8 +11,6 @@ void draw()
     init = true;
     notes = createWriter(file_path + "notes.txt");
     write_notes();
-    arduino.digitalWrite(cs_trigger_pin, Arduino.LOW);
-    arduino.digitalWrite(us_trigger_pin, Arduino.LOW);
   }
 
   //response to cs pre-training
