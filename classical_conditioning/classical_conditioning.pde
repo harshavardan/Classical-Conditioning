@@ -16,9 +16,9 @@ Arduino arduino;
 //fish information
 
 String genotype = "Indian Wild Type";
-String dpf = "6";
-String fish = "F1";
-String batch_id = "3";
+String dpf = "8";
+String fish = "F4";
+String batch_id = "1";
 String file_path = "../../data/" + generate_date() + "/" + fish + "/";
 
 //debugging
@@ -27,26 +27,26 @@ int scaling = 1; //factor to scale down times during debugging
 
 //randomization of ITIs
 
-boolean random = false; //are ITIs randomized?
-float min = 30000 / scaling; //max ITI allowed
-float max = 45000 / scaling; //min ITI allowed
-long iti = 360000 / scaling; //ITI if not randomized
+boolean random = true; //are ITIs randomized?
+float min = 20000 / scaling; //max ITI allowed
+float max = 30000 / scaling; //min ITI allowed
+long iti = 10000 / scaling; //ITI if not randomized
 
 //timing of the experiment
 
-int baseline = 4000 / scaling; //how long to wait after sending OSC message to Bonsai to deliver the stimulus?
-int init_delay = 300000 / scaling; //initial delay
+int baseline = 5000 / scaling; //how long to wait after sending OSC message to Bonsai to deliver the stimulus?
+int init_delay = 30000 / scaling; //initial delay
 int no_pre_cs = 5;
-int no_pre_us = 0;
-int no_training = 20;
+int no_pre_us = 5;
+int no_training = 10;
 int no_test = 5;
 int no_probe = 0; //number of probe trials interspersed in the training trials
 long wait = 30000 / scaling; //wait period before test trials
 
 //cs and us parameters
 
-int cs_dur = 4000 / scaling; //time of cs on in milli seconds
-int us_dur = 10/ scaling; //time of bright flash
+int cs_dur = 2000 / scaling; //time of cs on in milli seconds
+int us_dur = 50/ scaling; //time of bright flash
 float us_pos = (cs_dur - us_dur)  * 1.0/ cs_dur; //position of the us within the cs
 int cs_pin = 8;
 int cs_trigger_pin = 3;

@@ -5,8 +5,8 @@
                  xmlns:p1="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -74,7 +74,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Threshold">
-                <cv:ThresholdValue>10</cv:ThresholdValue>
+                <cv:ThresholdValue>50</cv:ThresholdValue>
                 <cv:MaxValue>255</cv:MaxValue>
                 <cv:ThresholdType>Binary</cv:ThresholdType>
               </Combinator>

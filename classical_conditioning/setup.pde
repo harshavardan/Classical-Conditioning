@@ -23,6 +23,8 @@ void setup()
 
   println();  
   println("Program started");
+  println("Timing");
+  println(timing);
   
   oscP5 = new OscP5(this, 12000);
   location = new NetAddress("127.0.0.1", 2323);

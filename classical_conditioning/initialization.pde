@@ -58,10 +58,12 @@ void generate_random_timing()
     if (i < (timing.length - no_test))
     {
       timing[i] = i * int(random(min, max)) + init_delay;
-    } else if (i == (timing.length - no_test))
+    } 
+    else if (i == (timing.length - no_test))
     {
       timing[i] = timing[i - 1] + wait;
-    } else
+    } 
+    else
     {
       timing[i] = timing[i - 1] + random(min, max);
     }
@@ -145,6 +147,7 @@ void us()
   arduino.digitalWrite(us_pin, Arduino.LOW);
   arduino.digitalWrite(us_trigger_pin, Arduino.LOW);
   cc_datawriter[0].println(str(millis()) + ",");
+
 }
 
 //triggers training trial
