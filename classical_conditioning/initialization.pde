@@ -57,7 +57,14 @@ void generate_random_timing()
   {
     if (i < (timing.length - no_test))
     {
-      timing[i] = i * int(random(min, max)) + init_delay;
+      if (i == 0)
+      {
+        timing[i] = init_delay;
+      }
+      else
+      {
+        timing[i] = timing[i - 1] + int(random(min, max));
+      }
     } 
     else if (i == (timing.length - no_test))
     {

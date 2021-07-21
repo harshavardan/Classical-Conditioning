@@ -17,14 +17,18 @@ void setup()
    else
      generate_timing();
   
+  for (int i = 0; i< timing.length; i++)
+  {
+    print(timing[i]);
+    print(",");
+  }
+  
   pick_probe();
   println(no_probe);
   generate_trials();    
 
   println();  
   println("Program started");
-  println("Timing");
-  println(timing);
   
   oscP5 = new OscP5(this, 12000);
   location = new NetAddress("127.0.0.1", 2323);
