@@ -30,14 +30,14 @@ int scaling = 1; //factor to scale down times during debugging
 boolean random = true; //are ITIs randomized?
 float min = 20000 / scaling; //max ITI allowed
 float max = 30000 / scaling; //min ITI allowed
-long iti = 60000 / scaling; //ITI if not randomized
+long iti = 10000 / scaling; //ITI if not randomized
 
 //timing of the experiment
 
 int baseline = 5000 / scaling; //how long to wait after sending OSC message to Bonsai to deliver the stimulus?
-int init_delay = 300000 / scaling; //initial delay
-int no_pre_cs = 5;
-int no_pre_us = 1;
+int init_delay = 30000 / scaling; //initial delay
+int no_pre_cs = 50;
+int no_pre_us = 100;
 int no_training = 100;
 int no_test = 5;
 int no_probe = 0; //number of probe trials interspersed in the training trials

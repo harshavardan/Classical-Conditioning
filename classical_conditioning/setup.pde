@@ -17,12 +17,6 @@ void setup()
    else
      generate_timing();
   
-  for (int i = 0; i< timing.length; i++)
-  {
-    print(timing[i]);
-    print(",");
-  }
-  
   pick_probe();
   println(no_probe);
   generate_trials();    
