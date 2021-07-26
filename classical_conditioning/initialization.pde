@@ -53,6 +53,7 @@ void generate_timing()
 //generates timing of trials when iti is randomized
 void generate_random_timing()
 {
+  randomSeed(0);
   for (int i = 0; i < timing.length; i++)
   {
     if (i < (timing.length - no_test))
