@@ -16,9 +16,9 @@ Arduino arduino;
 //fish information
 
 String genotype = "Indian Wild Type";
-String dpf = "8";
+String dpf = "7";
 String fish = "dummy";
-String batch_id = "1";
+String batch_id = "2";
 String file_path = "../../data/" + generate_date() + "/" + fish + "/";
 
 //debugging
