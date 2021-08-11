@@ -1,0 +1,2 @@
+led:	780nm
+filter:	780+-10 or 780+-15nm
